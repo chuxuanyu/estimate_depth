@@ -12,7 +12,7 @@ import random
 import os
 import matplotlib.pyplot as plt
 from display_progress import print_progress
-MAX_STEPS = 10000#10000000
+MAX_STEPS = 200#10000000
 LOG_DEVICE_PLACEMENT = False #??????
 
 
@@ -27,7 +27,7 @@ NumOfTrainImge = 14400
 NumOfTest = NumOfImage - NumOfTrainImge
 FINE_TUNE = True
 
-def train(REFINE_TRAIN):
+def train(REFINE_TRAIN,a):
     BATCH_SIZE = 64
     
     with tf.Graph().as_default():
@@ -127,7 +127,7 @@ def train(REFINE_TRAIN):
                     saver_coarse.save(sess, coarse_checkpoint_path, global_step=step)
         plt.figure()
         plt.plot(lossli1)
-        plt.savefig("train_loss.jpg")    
+        plt.savefig("train_loss_%d.jpg",a)    
         plt.xlabel("Epoch")
         plt.ylabel("Train_loss")
         plt.title("Train_Loss for Each Epoch")
@@ -244,8 +244,8 @@ def main(argv=None):
     
     train_test_data(NumOfImage,NumOfTrainImge)
     print('--------Start Training-----------:')
-    train(False)
-    train(True)
+    train(False,1)
+    train(True,2)
     print('--------Start Testing-----------:')
     test()
     print('---------Finish---------')
