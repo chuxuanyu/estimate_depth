@@ -12,7 +12,7 @@ import random
 import os
 import matplotlib.pyplot as plt
 from display_progress import print_progress
-MAX_STEPS = 200#10000000
+MAX_STEPS = 500#10000000
 LOG_DEVICE_PLACEMENT = False #??????
 
 
@@ -28,7 +28,7 @@ NumOfTest = NumOfImage - NumOfTrainImge
 FINE_TUNE = True
 
 def train(REFINE_TRAIN,a):
-    BATCH_SIZE = 64
+    BATCH_SIZE = 8
     
     with tf.Graph().as_default():
         global_step = tf.Variable(0, trainable=False)
@@ -111,14 +111,14 @@ def train(REFINE_TRAIN,a):
             index = 0
             lossli=[]
             print('-------------------------------')
-            for i in range(300): 
+            for i in range(2000): 
                 _, loss_value, logits_val, images_val = sess.run([train_op, loss, logits, images], feed_dict={keep_conv: 0.8})  
                 if i % 50 == 0:
                     print('[Epoch]:',step,'[iteration]:',i,'[Train losses]:',loss_value)
                 lossli.append(loss_value)
                 index += 1
             lossli1.append(np.mean(lossli))
-            if step % 5 == 0 or (step * 1) == MAX_STEPS:
+            if step % 20 == 0 or (step * 1) == MAX_STEPS:
                 if REFINE_TRAIN:
                     refine_checkpoint_path = REFINE_DIR + '/model.ckpt'
                     saver_refine.save(sess, refine_checkpoint_path, global_step=step)
@@ -242,7 +242,7 @@ def main(argv=None):
     if not gfile.Exists(REFINE_DIR):
         gfile.MakeDirs(REFINE_DIR)
     
-    train_test_data(NumOfImage,NumOfTrainImge)
+    #train_test_data(NumOfImage,NumOfTrainImge)
     print('--------Start Training-----------:')
     train(False,1)
     train(True,2)
