@@ -111,9 +111,9 @@ def train(REFINE_TRAIN,a):
             index = 0
             lossli=[]
             print('-------------------------------')
-            for i in print_progress(range(300)): 
+            for i in range(300): 
                 _, loss_value, logits_val, images_val = sess.run([train_op, loss, logits, images], feed_dict={keep_conv: 0.8})  
-                if i % 100 == 0:
+                if i % 50 == 0:
                     print('[Epoch]:',step,'[iteration]:',i,'[Train losses]:',loss_value)
                 lossli.append(loss_value)
                 index += 1
