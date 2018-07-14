@@ -11,7 +11,7 @@ import train_operation as op
 import random
 import os
 import matplotlib.pyplot as plt
-
+from display_progress import print_progress
 MAX_STEPS = 10000#10000000
 LOG_DEVICE_PLACEMENT = False #??????
 
@@ -28,7 +28,7 @@ NumOfTest = NumOfImage - NumOfTrainImge
 FINE_TUNE = True
 
 def train(REFINE_TRAIN):
-    BATCH_SIZE = 8
+    BATCH_SIZE = 64
     
     with tf.Graph().as_default():
         global_step = tf.Variable(0, trainable=False)
@@ -111,7 +111,7 @@ def train(REFINE_TRAIN):
             index = 0
             lossli=[]
             print('-------------------------------')
-            for i in range(3000): 
+            for i in print_progress(range(300)): 
                 _, loss_value, logits_val, images_val = sess.run([train_op, loss, logits, images], feed_dict={keep_conv: 0.8})  
                 if i % 100 == 0:
                     print('[Epoch]:',step,'[iteration]:',i,'[Train losses]:',loss_value)
