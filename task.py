@@ -12,7 +12,7 @@ import random
 import os
 import matplotlib.pyplot as plt
 from display_progress import print_progress
-MAX_STEPS = 500#10000000
+MAX_STEPS = 15#10000000
 LOG_DEVICE_PLACEMENT = False #??????
 
 
@@ -118,7 +118,7 @@ def train(REFINE_TRAIN,a):
                 lossli.append(loss_value)
                 index += 1
             lossli1.append(np.mean(lossli))
-            if step % 20 == 0 or (step * 1) == MAX_STEPS:
+            if step % 5 == 0 or (step * 1) == MAX_STEPS-1:
                 if REFINE_TRAIN:
                     refine_checkpoint_path = REFINE_DIR + '/model.ckpt'
                     saver_refine.save(sess, refine_checkpoint_path, global_step=step)
@@ -244,8 +244,8 @@ def main(argv=None):
     
     #train_test_data(NumOfImage,NumOfTrainImge)
     print('--------Start Training-----------:')
-    train(False,1)
-    train(True,2)
+    #train(False,1)
+    #train(True,2)
     print('--------Start Testing-----------:')
     test()
     print('---------Finish---------')

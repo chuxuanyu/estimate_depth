@@ -1,5 +1,6 @@
 refine/
 coarse/
 data/hand_data/
+data/test/
 __pycache__
 \.DS_Store
